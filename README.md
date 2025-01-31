@@ -18,10 +18,14 @@ Este projeto automatiza a coleta, armazenamento e classificação de issues do r
 ## 📂 Estrutura do Projeto
 
 ```
-📦 evolucao_de_software
- ├── 📜 connect.py  # Código principal com a lógica de extração, armazenamento e classificação
- ├── 📜 config.py   # Configurações do banco de dados e token do GitHub (não incluído por segurança)
- ├── 📜 README.md   # Documentação do projeto
+📁 evolucao_de_software
+ ├── 📁 modulos           # Diretório com os módulos
+ |   ├── 📄 buscarIssues.py   # Função para buscar issues na API do GitHub
+ |   ├── 📄 classificarIssues.py # Função para classificação dos temas
+ │   └── 📄 inserts.py        # Função para inserir os dados no banco
+ ├── 📄 config.py          # Configurações do banco de dados e token do GitHub
+ ├── 📄 main.py            # Ponto de entrada do programa
+ └── 📄 README.md        # Documentação do projeto
 ```
 
 ## 📌 Como Usar
@@ -29,6 +33,9 @@ Este projeto automatiza a coleta, armazenamento e classificação de issues do r
 1. **Configurar as Credenciais**:  
    - Crie um arquivo `config.py` contendo:  
      ```python
+     OWNER = "Vercel"
+     REPO = "next.js"
+     
      DB_CONFIG = {
          "dbname": "seu_banco",
          "user": "seu_usuario",
@@ -48,3 +55,6 @@ Este projeto automatiza a coleta, armazenamento e classificação de issues do r
    ```
    python connect.py
    ```
+
+## 🔒 Observação
+Certifique-se de que as credenciais do banco de dados e do GitHub estejam corretas para evitar erros de autenticação ou conexão.
