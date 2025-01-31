@@ -1,16 +1,22 @@
 import requests
 import psycopg2
 from datetime import datetime
+import random
 import config
 
 dbConfig = config.DB_CONFIG
 token = config.GITHUB_TOKEN
 TAM = 500
 
-def buscarIssues():
+def buscarIssues(): #essa função faz a busca das issues de forma randomica, variando entre as paginas para que haja uma maior variedade entre issues mais novas e antigas.
     issues = []
-    page = 1
-    while len(issues) < TAM:
+    max_pages = 200
+    paginas_aleatorias = random.sample(range(1, max_pages + 1), 15)
+
+    for page in paginas_aleatorias:
+        if len(issues) >= TAM:
+            break
+
         url = "https://api.github.com/repos/Vercel/next.js/issues"
         headers = {"Authorization": f"token {token}"}
         params = {"state": "closed", "labels": "bug", "per_page": 100, "page": page}
@@ -19,12 +25,11 @@ def buscarIssues():
 
         if response.ok:
             issues.extend(response.json())
-            page += 1
         else:
             raise Exception(f"Erro ao acessar API: {response.status_code} - {response.text}")
     return issues[:TAM]
 
-def inserirNoBanco(issues):
+def inserirNoBanco(issues): #essa função insere as informações das issues na tabela criada no postgres
     try:
         conn = psycopg2.connect(**dbConfig)
         cursor = conn.cursor()
@@ -88,7 +93,7 @@ def inserirNoBanco(issues):
     except Exception as e:
         print(f"Erro ao inserir no banco de dados: {e}")
 
-def classificarTema():
+def classificarTema():  #essa função verifica o titulo e o corpo da issue e procura por palavras-chave qeu estejam relacionadas com os temas ((i) Refatoração e (ii) Testes de regressão.) após isso ele as classifica
     try:
         conn = psycopg2.connect(**dbConfig)
         cursor = conn.cursor()
