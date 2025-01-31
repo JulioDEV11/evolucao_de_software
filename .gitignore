@@ -1,2 +1,6 @@
 #ignora o arquivo de acesso ao bd
 config.py
+#ignora o arquivo csv pois era apenas um teste
+issues.csv
+#ignora a pasta pycache
+__pycache__/
