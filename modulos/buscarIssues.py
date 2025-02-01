@@ -3,7 +3,7 @@ import random
 import config
 
 token = config.GITHUB_TOKEN
-TAM = 500
+TAM = 300
 
 def buscarIssues(): #essa função faz a busca das issues de forma randomica, variando entre as paginas para que haja uma maior variedade entre issues mais novas e antigas.
     issues = []
@@ -16,7 +16,7 @@ def buscarIssues(): #essa função faz a busca das issues de forma randomica, va
 
         url = "https://api.github.com/repos/Vercel/next.js/issues"
         headers = {"Authorization": f"token {token}"}
-        params = {"state": "closed", "labels": "bug", "per_page": 100, "page": page}
+        params = {"state": "closed", "per_page": 100, "page": page}
 
         response = requests.get(url, headers=headers, params=params)
 
