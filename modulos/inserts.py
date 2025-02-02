@@ -11,7 +11,7 @@ def conectarBanco():
     except Exception as e:
         print(f"Erro ao conectar ao banco: {e}")
         return None
-    
+
 def inserirNoBanco(issues):
     conn = conectarBanco()
     if not conn:
