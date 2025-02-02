@@ -3,6 +3,7 @@ import config
 
 dbConfig = config.DB_CONFIG
 
+#Criação de dicionários para filtragem das issues
 palavras_refatoracao = [
     "refactor", "refactoring", "code cleanup", "optimize", "improve performance",
     "restructure", "reorganize", "simplify", "remove duplication", "enhance readability",
@@ -21,6 +22,7 @@ palavras_teste_regressao = [
     "test execution", "edge case", "test case design", "regression issue"
     ]
 
+#Classificar caso existam palavras no corpo ou título da issue
 def classificarTema():
     try:
         conn = psycopg2.connect(**dbConfig)
